@@ -1,0 +1,394 @@
+.tabla-contenedor-productos {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: "Courier New", monospace;
+  font-size: 14px;
+  color: #ffffff;
+  margin-left: 100px;
+  margin-top: 50px;
+  
+  th {
+    background-color: #000000;
+    padding: 15px;
+    border: 1px solid #ffffff;
+    text-align: center;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  }
+  
+  td {
+    padding: 15px;
+    border: 1px solid #ffffff;
+    text-align: center;
+    background-color: #1f1f1f;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  }
+  
+  tr:nth-child(even) {
+    background-color: #2e2e2e;
+  }
+  
+  .product-images {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .separacion {
+    margin-right: 5px;
+    color: #00ff00;
+    background-color: #000000;
+    border: 2px solid #00ff00;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  .separacion:hover {
+    background-color: #00ff00;
+    color: #000000;
+  }
+}
+
+.tabla-contenedor-productos::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url(../images/menuPowerProductos.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  z-index: -1;
+}
+
+
+
+.input-filtro-productos {
+  padding-top: 40px;
+  padding-left: 40px;
+
+  input {
+    border: 2px solid #00FF00;
+    background-color: #000000;
+    color: #00FF00;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.3s ease;
+
+    &:hover,
+    &:focus {
+      border-color: #00AA00;
+    }
+  }
+}
+
+.boton-crear-producto {
+    position: absolute;
+    top: 50px;
+    right: 0;
+    margin-right: 460px;
+}
+
+
+.boton-crear-producto .btn-primary {
+  background-color: #000000;
+  color: #00FF00;
+  border: 2px solid #00FF00;
+  border-radius: 4px;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #00FF00;
+    color: #000000;
+  }
+}
+
+.boton-ver-detalle {
+  display: inline-block;
+  padding: 6px 12px;
+  margin: 4px;
+  background-color: #0d6efd;
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}
+
+.boton-ver-detalle:hover {
+  background-color: #0b5ed7;
+}
+
+.boton-ver-detalle:active {
+  background-color: #0a58ca;
+}
+
+.product-images {
+  width: 60px;
+  height: 60px;
+}
+
+.dropzone {
+  border: 2px dashed #cccccc;
+  border-radius: 4px;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+
+
+  &.has-image {
+    border-color: #4caf50;
+  }
+
+  p {
+    margin: 0;
+    font-size: 16px;
+    color: #888;
+  }
+
+  .selected-image {
+    max-width: 300px; 
+    max-height: 300px;
+  }
+}
+
+.hacker-select {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 16px;
+  color: #00ff00;
+  background-color: #000000;
+  border: 2px solid #00ff00;
+  border-radius: 5px;
+  padding: 10px;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+}
+
+.hacker-select:hover {
+  border-color: #00cc00;
+}
+
+.hacker-select option {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 16px;
+  color: #00ff00;
+  background-color: #000000;
+  border: 2px solid #00ff00;
+  padding: 10px;
+}
+
+.hacker-select option:hover {
+  background-color: #00cc00;
+}
+
+.error-message {
+  padding: 20px;
+  background-color: #000000;
+  color: #ff0000;
+  border: 2px solid #ff0000;
+  border-radius: 10px;
+  font-family: "Press Start 2P", cursive;
+  font-size: 16px;
+  text-align: center;
+  text-transform: uppercase;
+  animation: glitch 2s infinite;
+}
+
+@keyframes glitch {
+  0% {
+    transform: skewX(-10deg) rotate(-2deg);
+    text-shadow: 3px 3px 0 #ff0000, -1px -1px 0 #00ff00, -2px -2px 0 #0000ff;
+  }
+  20% {
+    transform: skewX(5deg) rotate(2deg);
+    text-shadow: -2px -2px 0 #ff0000, 1px 1px 0 #00ff00, 2px 2px 0 #0000ff;
+  }
+  40% {
+    transform: skewX(-5deg) rotate(-1deg);
+    text-shadow: 1px 1px 0 #ff0000, -1px -1px 0 #00ff00, -2px -2px 0 #0000ff;
+  }
+  60% {
+    transform: skewX(2deg) rotate(1deg);
+    text-shadow: -1px -1px 0 #ff0000, 1px 1px 0 #00ff00, 2px 2px 0 #0000ff;
+  }
+  80% {
+    transform: skewX(-2deg) rotate(-1deg);
+    text-shadow: 1px 1px 0 #ff0000, -1px -1px 0 #00ff00, -2px -2px 0 #0000ff;
+  }
+  100% {
+    transform: skewX(0) rotate(0);
+    text-shadow: 0 0 5px #ff0000, 0 0 10px #00ff00, 0 0 15px #0000ff;
+  }
+}
+
+.modal-header {
+  background-color: #b6b6b6;
+  color: #000000;
+  border-bottom: none;
+}
+
+.modal-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 24px;
+  text-transform: uppercase;
+}
+
+.modal-body {
+  background-color: #b6b6b6;
+  color: #000000;
+}
+
+.form-label {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+.form-control {
+  background-color: #000000;
+  border: none;
+  border-bottom: 2px solid #00ff00;
+  color: #00ff00;
+  padding: 10px;
+  transition: border-color 0.3s ease;
+}
+
+.form-control:focus {
+  border-color: #000000;
+}
+
+.error-message {
+  color: red;
+}
+
+.dropzone {
+  border: 2px dashed #00ff00;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.has-image {
+  border-color: #00cc00;
+}
+
+.selected-image {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+.hacker-label {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 16px;
+  color: #00ff00;
+  text-transform: uppercase;
+}
+
+.hacker-select {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 16px;
+  color: #00ff00;
+  background-color: #000000;
+  border: 2px solid #00ff00;
+}
+
+.hacker-select option {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 16px;
+  color: #00ff00;
+  background-color: #000000;
+  border: 2px solid #00ff00;
+}
+
+.boton-ver-detalle {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 16px;
+  color: #00ff00;
+  background-color: #000000;
+  border: 2px solid #00ff00;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.boton-ver-detalle:hover {
+  background-color: #00ff00;
+  color: #000000;
+}
+
+.modal-footer {
+  background-color: #000000;
+  border-top: none;
+}
+
+.modal-footer .btn-secondary {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 16px;
+  color: #00ff00;
+  background-color: #000000;
+  border: 2px solid #00ff00;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.modal-footer .btn-secondary:hover {
+  background-color: #00ff00;
+  color: #000000;
+}
+
+.modal-footer .btn-primary {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 16px;
+  color: #00ff00;
+  background-color: #000000;
+  border: 2px solid #00ff00;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.modal-footer .btn-primary:disabled {
+  background-color: #808080;
+  border-color: #808080;
+  cursor: not-allowed;
+  transition: none;
+}
+
+.modal-footer .btn-primary:hover {
+  background-color: #00ff00;
+  color: #000000;
+}
+
+.modal-header::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url(../images/supermarket-949912_1280.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  z-index: -1;
+}
+
+.seleccionar-imagen-boton {
+  color: #00ff00;
+  background-color: #000000;
+  border: 2px solid #00ff00;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  padding: 6px 12px;
+  border-radius: 6px;
+  margin-top: 10px;
+}
+
+.seleccionar-imagen-boton:hover {
+  background-color: #00ff00;
+  color: #000000;
+}

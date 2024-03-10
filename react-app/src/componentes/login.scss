@@ -1,0 +1,228 @@
+// @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;600&family=Space+Grotesk:wght@500&display=swap');
+
+// body {
+//     font-family: 'Rubik', sans-serif;
+// }
+
+.login-container {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 40px;
+  background-color: #000000;
+  color: #00ff00;
+  border: 1px solid #00ff00;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  text-align: center;
+}
+
+.welcome-title {
+  font-family: "Orbitron", sans-serif;
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+
+.form {
+  margin-bottom: 20px;
+}
+
+.label {
+  display: block;
+  font-family: "Courier New", monospace;
+  font-size: 14px;
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+.input {
+  width: 100%;
+  padding: 8px;
+  font-family: "Courier New", monospace;
+  font-size: 14px;
+  margin-bottom: 10px;
+  background-color: #333333;
+  color: #00ff00;
+  border: 1px solid #00ff00;
+  border-radius: 3px;
+}
+
+.button {
+  padding: 8px 16px;
+  font-family: "Courier New", monospace;
+  font-size: 14px;
+  background-color: #00ff00;
+  color: #000000;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #00cc00;
+}
+
+.pictures-login-container {
+  margin-top: 20px;
+}
+
+.pictures-login {
+  width: 300px;
+  height: auto;
+  border-radius: 5px;
+}
+
+
+
+.description {
+  font-family: "Orbitron", sans-serif;
+  font-size: 28px;
+  line-height: 1.5;
+  padding: 20px;
+  background-color: #000000;
+  color: #00ff00;
+  border: 1px solid #00ff00;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  animation: neon-glow 2s infinite;
+}
+
+@keyframes neon-glow {
+  0% {
+    text-shadow: 0 0 5px #00ff00, 0 0 10px #00ff00, 0 0 15px #00ff00, 0 0 20px #00ff00, 0 0 25px #00ff00, 0 0 30px #00ff00, 0 0 35px #00ff00;
+  }
+  100% {
+    text-shadow: 0 0 5px #00ff00, 0 0 10px #00ff00, 0 0 15px #00ff00, 0 0 20px #00ff00, 0 0 25px #00ff00, 0 0 30px #00ff00, 0 0 35px #00ff00, 0 0 40px #00ff00, 0 0 45px #00ff00, 0 0 50px #00ff00, 0 0 55px #00ff00, 0 0 60px #00ff00, 0 0 65px #00ff00, 0 0 70px #00ff00;
+  }
+}
+
+.description::before {
+  content: ">>>";
+  display: inline-block;
+  color: #ff0000;
+  font-size: 32px;
+  margin-right: 10px;
+  animation: blink 0.7s infinite;
+}
+
+.description::after {
+  content: "<<<";
+  display: inline-block;
+  color: #ff0000;
+  font-size: 32px;
+  margin-left: 10px;
+  animation: blink 0.7s infinite;
+}
+
+.description span {
+  color: #ffffff;
+  font-weight: bold;
+}
+
+.login-container::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url(../images/login-mercado.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  z-index: -1;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// .description {
+//   font-family: "Courier New", monospace;
+//   font-size: 16px;
+//   color: #00ff00;
+//   line-height: 1.5;
+//   padding: 20px;
+//   background-color: #000000;
+//   border: 1px solid #00ff00;
+//   border-radius: 5px;
+//   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+//   opacity: 0;
+//   animation: text-appear 4s linear infinite;
+// }
+
+// @keyframes text-appear {
+//   0% {
+//     opacity: 0;
+//     transform: translateY(20px);
+//   }
+//   25% {
+//     opacity: 1;
+//     transform: translateY(0);
+//   }
+//   75% {
+//     opacity: 1;
+//     transform: translateY(0);
+//   }
+//   100% {
+//     opacity: 0;
+//     transform: translateY(-20px);
+//   }
+// }
+
+// .description::before {
+//   content: ">>>";
+//   display: inline-block;
+//   color: #ff0000;
+//   margin-right: 10px;
+// }
+
+// .description::after {
+//   content: "<<<";
+//   display: inline-block;
+//   color: #ff0000;
+//   margin-left: 10px;
+// }
+
+// .description span {
+//   color: #ffffff;
+//   font-weight: bold;
+// }
+

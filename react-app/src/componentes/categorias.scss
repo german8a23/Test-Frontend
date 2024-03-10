@@ -1,0 +1,112 @@
+.tabla-contenedor-categorias {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: "Courier New", monospace;
+  font-size: 14px;
+  color: #ffffff;
+  margin-left: 200px;
+  margin-top: 70px;
+  
+  th {
+    background-color: #000000;
+    padding: 15px;
+    border: 1px solid #ffffff;
+    text-align: center;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  }
+  
+  td {
+    padding: 15px;
+    border: 1px solid #ffffff;
+    text-align: center;
+    background-color: #1f1f1f;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  }
+  
+  tr:nth-child(even) {
+    background-color: #2e2e2e;
+  }
+}
+
+.tabla-contenedor-categorias::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url(../images/menuMarket.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  z-index: -1;
+  
+}
+
+.input-filtro-categorias {
+  padding-top: 40px;
+  padding-left: 40px;
+
+  input {
+    border: 2px solid #00FF00;
+    background-color: #000000;
+    color: #00FF00;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.3s ease;
+
+    &:hover,
+    &:focus {
+      border-color: #00AA00;
+    }
+  }
+}
+
+.boton-crear-categoria {
+    position: absolute;
+    top: 50px;
+    right: 0;
+    margin-right: 460px;
+    cursor: pointer;
+    padding: 10px 20px;
+    background-color: transparent;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+.boton-crear-categoria .btn-primary {
+  background-color: #000000;
+  color: #00FF00;
+  border: 2px solid #00FF00;
+  border-radius: 4px;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #00FF00;
+    color: #000000;
+  }
+
+}
+
+.tabla-contenedor-categorias .btn-primary {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 16px;
+  color: #00ff00;
+  background-color: #000000;
+  border: 2px solid #00ff00;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.tabla-contenedor-categorias .btn-primary:hover {
+  background-color: #00ff00;
+  color: #000000;
+}
