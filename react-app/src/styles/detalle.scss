@@ -30,8 +30,8 @@
  }
 
  .product-image {
-   width: 150px;
-   height: 120px;
+   width: 300px;
+   height: 300px;
 }
 
 .detalle-container::before {
@@ -41,7 +41,6 @@
    left: 0;
    right: 0;
    bottom: 0;
-   background-image: url(../images/menuProducto.jpg);
    background-repeat: no-repeat;
    background-size: cover;
    z-index: -1;

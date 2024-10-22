@@ -1,0 +1,172 @@
+.tabla-contenedor-categorias {
+    width: 100%;
+    max-width: 1250px;
+    margin: 2rem auto;
+    font-family: 'Roboto', sans-serif;
+    color: #333;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-left: 10px;
+  
+    table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+    }
+  
+    th, td {
+      padding: 1rem;
+      text-align: left;
+      border-bottom: 1px solid #e0e0e0;
+    }
+  
+    th {
+      background-color: #f5f5f5;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-size: 0.9rem;
+      color: #555;
+    }
+  
+    tr:last-child td {
+      border-bottom: none;
+    }
+  
+    tr:hover {
+      background-color: #f9f9f9;
+    }
+  }
+  
+  .filtro-y-crear {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+  
+    @media (max-width: 768px) {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  }
+
+  .contenedor-posicion-categorias {
+    display: flex;
+    justify-content: space-between; /* Esto empuja los elementos a los extremos */
+    align-items: center; /* Centra verticalmente los elementos */
+    padding: 10px; /* Añade un poco de espacio alrededor */
+  }
+
+
+  
+  .contenedor-categorias-principal {
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 2rem;
+   
+  }
+
+  .input-filtro-categorias {
+    flex: 1; /* Permite que el filtro ocupe el espacio restante */
+    margin-right: 10px; /* Añade un poco de espacio entre el filtro y el botón */
+    margin-top: 20px;
+  
+    input {
+      width: 100%;
+      padding: 0.75rem;
+      padding-right: 2.5rem; // Space for the search icon
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 1rem;
+      transition: all 0.2s ease-in-out;
+      background-color: #fff;
+  
+      &::placeholder {
+        color: #999;
+      }
+  
+      &:focus {
+        outline: none;
+        border-color: #000000; // Green color similar to the Silk Road theme
+      }
+    }
+  
+    &::after {
+      // content: '\1F50D';
+      position: absolute;
+      right: 0.75rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #999;
+      pointer-events: none;
+    }
+  
+    @media (max-width: 768px) {
+      margin-right: 0;
+      margin-bottom: 1rem;
+    }
+  }
+
+  // Additional styles for the container
+.search-container-filtro-categorias {
+  width: 100%; /* Asegura que el input ocupe todo el ancho disponible */
+  padding: 8px; /* Añade un poco de padding al input */
+  border: 1px solid #ccc; /* Añade un borde al input */
+  border-radius: 4px; /* Redondea los bordes del input */
+}
+  
+  .boton-crear-categoria {
+    .btn-primary {
+      background-color: #3498db;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      // padding: 0.75rem 1.5rem;
+      padding: 15px;
+      margin-top: 20px;
+      margin-left: 10px;
+      font-size: 1rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+  
+      &:hover {
+        background-color: #2980b9;
+      }
+    }
+  }
+  
+  .tabla-contenedor-categorias {
+    .btn-primary {
+      background-color: #2ecc71;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 0.5rem 1rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+  
+      &:hover {
+        background-color: #27ae60;
+      }
+    }
+  }
+  
+  @media (max-width: 600px) {
+    .tabla-contenedor-categorias {
+      font-size: 0.9rem;
+  
+      th, td {
+        padding: 0.75rem;
+      }
+    }
+  }

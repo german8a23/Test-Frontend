@@ -1,0 +1,126 @@
+
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+/* Estilos para el Sidebar */
+.sidebar {
+  width: 100%;
+  background-color: #007bff;
+  padding: 1rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-around;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 2rem;
+}
+
+.sidebar li {
+  margin: 0;
+}
+
+.sidebar a {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.sidebar a:hover {
+  color: #ffd700;
+  transition: color 0.3s ease;
+}
+
+/* Ajuste para que el contenido comience después del sidebar */
+.navbar {
+
+  /* width: 100%;
+  background-color: #333;
+  color: white;
+  padding: 1rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 55px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
+
+
+  background-color: #333;
+  color: white;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 55px;
+ 
+}
+
+
+.user-name {
+  font-weight: bold;
+}
+
+.logout-btn {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.logout-btn:hover {
+  background-color: #d32f2f;
+}
+
+main {
+  flex-grow: 1;
+  padding: 1rem;
+  background-color: #fafafa;
+  overflow-y: auto;
+}
+
+.content main {
+  flex: 1;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

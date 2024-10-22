@@ -1,48 +1,179 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import './detalle.scss';
+import { useParams } from 'react-router-dom';
+import '../styles/detalle.scss';
 
-const Detalle = () => {
+const VerDetalle = () => {
   const { id } = useParams();
   const [producto, setProducto] = useState(null);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchProducto = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/productos/${id}`, {
-        });
+        const response = await axios.get(`http://localhost:3000/productos/${id}`);
         setProducto(response.data);
       } catch (error) {
         console.error('Error al obtener el producto', error);
       }
     };
-
-    fetchData();
+    fetchProducto();
   }, [id]);
 
+  
+        if (!producto) {
+          return <p>Cargando...</p>
+        }
+
+  
 
   return (
     <div className='detalle-container'>
-      {producto ? (
-        <div className='ver-detalle'>
-          <h2>Detalles del Producto</h2>
-          <p>Nombre: {producto.nombre}</p>
-          <p>Stock: {producto.stock}</p>
-          <p>Precio: {producto.precio}</p>
-          <p>Categoría: {producto.categoria}</p>
-          {producto.foto && (
-            <img src={producto.foto} alt={producto.foto} className="product-image" />
-          )}
-        </div>
-      ) : (
-        <p>No se pudo cargar la información del producto.</p>
-      )}
+      <div className='ver-detalle'>
+        <p>Nombre: {producto.nombre} </p>
+        <p>Stock: {producto.stock}</p>
+        <p>Precio: {producto.precio}</p>
+        <p>Categoría: {producto.categoria}</p>
+
+        {producto.foto && (
+          <img src={`data:image/jpg;base64,${producto.foto}`} alt="producto" className="product-images" />
+        )}
+
+
+        {/* {producto.foto && (
+          <img src={producto.foto} alt={producto.foto} className="product-image" />
+        )} */}
+      </div>
     </div>
   );
 };
 
-export default Detalle;
+export default VerDetalle;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// import React, { useEffect, useState } from 'react';
+// import { useParams } from 'react-router-dom';
+// import axios from 'axios';
+// import '../styles/detalle.scss';
+
+// const Detalle = () => {
+//   const { id } = useParams();
+//   const [producto, setProducto] = useState(null);
+
+//   useEffect(() => {
+//     const fetchData = async () => {
+//       try {
+//         const response = await axios.get(`http://localhost:3000/productos/${id}`, {
+//         });
+//         setProducto(response.data);
+//       } catch (error) {
+//         console.error('Error al obtener el producto', error);
+//       }
+//     };
+
+//     fetchData();
+//   }, [id]);
+
+//   return (
+//     <div className='detalle-container'>
+//       {producto ? (
+//         <div className='ver-detalle'>
+//           <h2>Detalles del Producto</h2>
+//           <p>Nombre: {producto.nombre}</p>
+//           <p>Stock: {producto.stock}</p>
+//           <p>Precio: {producto.precio}</p>
+//           <p>Categoría: {producto.categoria}</p>
+
+//           {producto.foto && (
+//             <img src={`data:image/png;base64,${producto.foto}`} alt="Producto" className="product-images" />
+//           )}
+
+//           {/* {producto.foto && (
+//              <img src={`data:image/jpg;base64,${producto.foto}`} alt={producto.nombre} />
+//             // <img src={producto.foto} alt={producto.foto} className="product-image" />
+//           )} */}
+
+//         </div>
+//       ) : (
+//         <p>No se pudo cargar la información del producto.</p>
+//       )}
+//     </div>
+//   );
+// };
+
+// export default Detalle;
+
+
+
+
+
+
+
+
+
+
+
+
+// import React, { useEffect, useState } from 'react';
+// import { useParams } from 'react-router-dom';
+// import axios from 'axios';
+// import '../styles/detalle.scss';
+
+// const Detalle = () => {
+//   const { id } = useParams();
+//   const [producto, setProducto] = useState(null);
+
+//   useEffect(() => {
+//     const fetchData = async () => {
+//       try {
+//         const response = await axios.get(`http://localhost:3000/productos/${id}`, {
+//         });
+//         setProducto(response.data);
+//       } catch (error) {
+//         console.error('Error al obtener el producto', error);
+//       }
+//     };
+
+//     fetchData();
+//   }, [id]);
+
+
+//   return (
+//     <div className='detalle-container'>
+//       {producto ? (
+//         <div className='ver-detalle'>
+//           <h2>Detalles del Producto</h2>
+//           <p>Nombre: {producto.nombre}</p>
+//           <p>Stock: {producto.stock}</p>
+//           <p>Precio: {producto.precio}</p>
+//           <p>Categoría: {producto.categoria}</p>
+//           {producto.foto && (
+//             <img src={producto.foto} alt={producto.foto} className="product-image" />
+//           )}
+//         </div>
+//       ) : (
+//         <p>No se pudo cargar la información del producto.</p>
+//       )}
+//     </div>
+//   );
+// };
+
+// export default Detalle;
 
 
 

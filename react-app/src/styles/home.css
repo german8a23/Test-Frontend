@@ -1,0 +1,67 @@
+
+
+  /* Contenedor central de la presentación */
+  .home-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Contenido centrado y destacado */
+  .presentation-content {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 3rem;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    animation: fadeIn 1.2s ease-in-out;
+  }
+  
+  /* Título llamativo */
+  .presentation-title {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 1.5rem;
+  }
+  
+  /* Subtítulo atractivo */
+  .presentation-subtitle {
+    font-size: 1.5rem;
+    color: #555;
+    margin-bottom: 2rem;
+  }
+  
+  /* Botón de llamada a la acción con efecto */
+  .cta-button {
+    background-color: #ff4e50;
+    color: white;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+  
+  .cta-button:hover {
+    background-color: #f9d423;
+    transform: scale(1.05); /* Aumento ligero al pasar el mouse */
+  }
+  
+  /* Animación de entrada suave */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  
