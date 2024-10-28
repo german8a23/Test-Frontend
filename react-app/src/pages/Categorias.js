@@ -5,6 +5,7 @@ import * as FaIcons from 'react-icons/fa';
 import { FaRegPenToSquare } from "react-icons/fa6";
 import '../styles/categorias.scss';
 import Swal from 'sweetalert2';
+import useDebounce from '../hook/debounce';
 
 const TablaCategorias = () => {
   const [categorias, setCategorias] = useState([]);
@@ -14,11 +15,10 @@ const TablaCategorias = () => {
   const [showCrearModal, setShowCrearModal] = useState(false);
   const [nuevoNombreCategoria, setNuevoNombreCategoria] = useState('');
 
+
   useEffect(() => {
     fetchData();
   }, []);
-
-
 
   const fetchData = async () => {
     try {
@@ -40,6 +40,24 @@ const TablaCategorias = () => {
         icon: "error",
         title: "Oops...",
         text: "Ingresa una categoría!",
+      });
+      return;
+    }
+
+    if (editarCategoriaData.nombre.includes(' ')) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Sin espacios!",
+      });
+      return;
+    }
+
+    if (editarCategoriaData.nombre.length < 3) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "3 caracteres minimo!",
       });
       return;
     }
@@ -71,20 +89,48 @@ const TablaCategorias = () => {
     }
   }
 
-  const eliminarCategoria = (id) => {
-    console.log("ID a eliminar:", id); 
-    if (!id) {
-      console.error("El ID no está definido");
-      return;
+  const eliminarCategoria = async (id) => {
+    const result = await Swal.fire({
+      title: '¿Estás seguro?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar',
+    });
+
+    if (result.isConfirmed) {
+      try {
+        const response = await axios.get('http://localhost:3000/productos');
+        const productos = response.data;
+
+        const productosAsociados = productos.filter(producto => producto._id !== id);
+
+        if (productosAsociados.length > 0) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'No se puede eliminar la categoría porque tiene productos asociados.',
+          });
+        } else {
+          await axios.delete(`http://localhost:3000/categorias/${id}`);
+          setCategorias(categorias.filter(categoria => categoria._id !== id));
+          Swal.fire(
+            'Eliminado',
+            'La categoría ha sido eliminada.',
+            'success'
+          );
+        }
+      } catch (error) {
+        console.error('Error al eliminar la categoría', error);
+        Swal.fire(
+          'Error',
+          'Hubo un problema al eliminar la categoría.',
+          'error'
+        );
+      }
     }
-    axios.delete(`http://localhost:3000/categorias/${id}`)
-      .then(response => {
-        console.log("Categoría eliminada:", response.data);
-        fetchData(); 
-      })
-      .catch(error => {
-        console.error("Error al eliminar la categoría:", error);
-      });
   };
 
 
@@ -94,6 +140,24 @@ const TablaCategorias = () => {
         icon: "error",
         title: "Oops...",
         text: "Ingresa una categoría!",
+      });
+      return;
+    }
+
+    if (nombre.includes(' ')) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Sin espacios!",
+      });
+      return;
+    }
+
+    if (nombre.length < 3) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "3 caracteres minimo!",
       });
       return;
     }
@@ -114,18 +178,22 @@ const TablaCategorias = () => {
     }
   }
 
+  const debouncedNombreFiltro = useDebounce(nombreFiltro, 500);
+
+
   const filtrarCategorias = useCallback(async () => {
-    if (nombreFiltro.trim() === '') {
+    if (debouncedNombreFiltro.trim() === '') {
       fetchData();
     } else {
-      const response = await axios.get(`http://localhost:3000/categorias/buscar/${nombreFiltro}`);
+      const response = await axios.get(`http://localhost:3000/categorias/buscar/${debouncedNombreFiltro}`);
       setCategorias(response.data);
     }
-  }, [nombreFiltro]);
+  }, [debouncedNombreFiltro]);
 
   useEffect(() => {
     filtrarCategorias();
   }, [filtrarCategorias]);
+
 
 
   return (
@@ -145,6 +213,7 @@ const TablaCategorias = () => {
           <Button onClick={() => setShowCrearModal(true)}>Crear Categoría</Button>
         </div>
       </div>
+
 
       <Modal show={showCrearModal} onHide={() => setShowCrearModal(false)}>
         <Modal.Header closeButton>

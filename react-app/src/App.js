@@ -1,5 +1,5 @@
 import React from 'react'; 
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { BrowserRouter,  Route, Routes } from 'react-router-dom';
 import Home from './pages/Home';
 import Categorias from './pages/Categorias';
 import Productos from './pages/Productos';
@@ -9,7 +9,7 @@ import RegisterScreen from './componentes/auth/RegisterScreen';
 import PrivateRoute from './routers/PrivateRoute';
 import Dashboard from './pages/Dashboard';
 import PublicRoute from './routers/PublicRoute';
-// import PageNotFound from './componentes/PageNotFound';
+import PageNotFound from './componentes/PageNotFound';
 
 const App = () => {
   return (
@@ -28,8 +28,8 @@ const App = () => {
           </Route>
         </Route>
 
-        <Route path="*" element={<Navigate to="/login" />} />
-        {/* <Route path="*" element={<PageNotFound />} /> */}
+        {/* <Route path="*" element={<Navigate to="/login" />} /> */}
+        <Route path="*" element={<PageNotFound />} />
       </Routes>
     </BrowserRouter>
   );

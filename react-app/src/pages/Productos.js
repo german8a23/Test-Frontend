@@ -7,23 +7,24 @@ import * as FaIcons from 'react-icons/fa';
 import { FaRegPenToSquare } from "react-icons/fa6";
 import Swal from 'sweetalert2';
 import '../styles/productos.scss';
+import useDebounce from '../hook/debounce';
 
 const TablaProductos = () => {
   const [productos, setProductos] = useState([]);
   const [categorias, setCategorias] = useState([]);
   const [nombreFiltro, setNombreFiltro] = useState('');
   const [showEditarModal, setShowEditarModal] = useState(false);
-  const [editarProductoData, setEditarProductoData] = useState({ id: null, nombre: '', stock: 0, precio: 0, foto: null, categoria: '' });
+  const [editarProductoData, setEditarProductoData] = useState({ id: null, nombre: '', stock: '', precio: '', foto: null, categoria: '' });
   const [showCrearModal, setShowCrearModal] = useState(false);
-  const [nuevoProductoData, setNuevoProductoData] = useState({ nombre: '', stock: 0, precio: 0, foto: null, categoria: '' });
+  const [nuevoProductoData, setNuevoProductoData] = useState({ nombre: '', stock: '', precio: '', foto: null, categoria: '' });
   const [foto, setFoto] = useState(null);
-
+  const [errors, setErrors] = useState({ nombre: '', stock: '', precio: '' });
+  const [moneda, setMoneda] = useState('$')
 
   useEffect(() => {
     fetchData();
     fetchCategorias();
   }, []);
-
 
   const fetchCategorias = async () => {
     try {
@@ -34,6 +35,17 @@ const TablaProductos = () => {
       console.error('Error al obtener las categorías', error);
     }
   };
+
+  const handleMonedaChange = (e) => {
+    setMoneda(e.target.value);
+  };
+
+  const handlePrecioChange = (e) => {
+    setNuevoProductoData({ ...nuevoProductoData, precio: e.target.value });
+    setEditarProductoData({ ...editarProductoData, precio: e.target.value });
+  };
+
+
 
   const handleDrop = (acceptedFiles) => {
     if (acceptedFiles && acceptedFiles.length > 0) {
@@ -61,7 +73,6 @@ const TablaProductos = () => {
     }
   };
 
-
   const { getRootProps, getInputProps, open } = useDropzone({
     accept: '*/*',
     onDrop: handleDrop,
@@ -84,24 +95,83 @@ const TablaProductos = () => {
   }
 
   const formIsValid = () => {
-    return (
-      editarProductoData.nombre.trim().length >= 3 &&
-      editarProductoData.stock > 0 &&
-      editarProductoData.precio > 0 &&
-      editarProductoData.categoria.trim().length >= 3
-    );
+    let isValid = true;
+    const newErrors = { nombre: '', stock: '', precio: '' };
+
+    if (editarProductoData.nombre.trim().length < 3) {
+      newErrors.nombre = 'El nombre debe tener al menos 3 caracteres';
+      isValid = false;
+    } else if (!/^[A-Za-z\s]+$/.test(editarProductoData.nombre)) {
+      newErrors.nombre = 'El nombre no debe tener numeros';
+      isValid = false;
+    }
+
+    if (editarProductoData.nombre.includes(' ')) {
+      newErrors.nombre = 'Sin espacios...';
+      isValid = false;
+    }
+
+    const stock = String(editarProductoData.stock);
+    const precio = String(editarProductoData.precio);
+
+    if (stock.trim().length <= 0 || Number(editarProductoData.stock) <= 0) {
+      newErrors.stock = 'El stock debe ser mayor que 0';
+      isValid = false;
+    }
+
+    if (precio.trim().length <= 0 || Number(editarProductoData.precio) <= 0) {
+      newErrors.precio = 'El precio debe ser mayor que 0';
+      isValid = false;
+    }
+
+
+    setErrors(newErrors);
+    return isValid;
   };
 
   const formIsValidCreate = () => {
-    return (
-      nuevoProductoData.nombre.trim().length >= 3 &&
-      nuevoProductoData.stock > 0 &&
-      nuevoProductoData.precio > 0 &&
-      nuevoProductoData.categoria.trim().length >= 3
-    );
+    let isValid = true;
+    const newErrors = { nombre: '', stock: '', precio: '' };
+
+    if (nuevoProductoData.nombre.trim().length < 3) {
+      newErrors.nombre = 'El nombre debe tener al menos 3 caracteres';
+      isValid = false;
+    } else if (!/^[A-Za-z\s]+$/.test(nuevoProductoData.nombre)) {
+      newErrors.nombre = 'El nombre no debe tener numeros';
+      isValid = false;
+    }
+
+    if (nuevoProductoData.nombre.includes(' ')) {
+      newErrors.nombre = 'Sin espacios...';
+      isValid = false;
+
+    }
+
+    if (nuevoProductoData.stock.trim().length <= 0) {
+      newErrors.stock = 'El stock debe ser mayor que 0';
+      isValid = false;
+    }
+
+    if (nuevoProductoData.precio.trim().length <= 0) {
+      newErrors.precio = 'El precio debe ser mayor que 0';
+      isValid = false;
+    }
+
+
+    setErrors(newErrors);
+    return isValid;
   };
 
   const guardarCambiosProducto = async () => {
+    if (!formIsValid()) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        html: Object.values(errors).filter(Boolean).join('<br/>'),
+      });
+      return;
+    }
+
     try {
       if (editarProductoData.id) {
         const formData = new FormData();
@@ -172,8 +242,16 @@ const TablaProductos = () => {
     }
   };
 
-
   const crearProducto = async () => {
+    if (!formIsValidCreate()) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        html: Object.values(errors).filter(Boolean).join('<br/>'),
+      });
+      return;
+    }
+
     try {
       const formData = new FormData();
       formData.append('nombre', nuevoProductoData.nombre);
@@ -191,21 +269,20 @@ const TablaProductos = () => {
           }
         }).then(() => {
           setShowCrearModal(false);
-          setNuevoProductoData({ nombre: '', stock: 0, precio: 0, foto: null, categoria: '' });
+          setNuevoProductoData({ nombre: '', stock: '', precio: '', foto: null, categoria: '' });
           setFoto(null);
           fetchData();
         }).catch(error => {
           console.error('Error al crear el producto', error);
         });
       } else {
-     
         await axios.post('http://localhost:3000/productos', formData, {
           headers: {
             'Content-Type': 'multipart/form-data'
           }
         });
         setShowCrearModal(false);
-        setNuevoProductoData({ nombre: '', stock: 0, precio: 0, foto: null, categoria: '' });
+        setNuevoProductoData({ nombre: '', stock: '', precio: '', foto: null, categoria: '' });
         setFoto(null);
         fetchData();
       }
@@ -215,21 +292,22 @@ const TablaProductos = () => {
   };
 
 
+  const debounceNombreFiltroProducto = useDebounce(nombreFiltro, 500);
+
   const filtrarProductos = useCallback(async () => {
-    if (nombreFiltro.trim() === '') {
+    if (debounceNombreFiltroProducto.trim() === '') {
       fetchData();
     } else {
-      const response = await axios.get(`http://localhost:3000/productos/buscar/${nombreFiltro}`);
+      const response = await axios.get(`http://localhost:3000/productos/buscar/${debounceNombreFiltroProducto}`);
       setProductos(response.data);
     }
-  }, [nombreFiltro]);
+  }, [debounceNombreFiltroProducto]);
 
   useEffect(() => {
     filtrarProductos();
   }, [filtrarProductos]);
 
   return (
-
     <div className='contenedor-productos-principal'>
       <div className='contenedor-posicion'>
         <div className='input-filtro-productos'>
@@ -246,7 +324,6 @@ const TablaProductos = () => {
           <Button onClick={() => setShowCrearModal(true)} >Crear Producto</Button>
         </div>
       </div>
-
 
       <Table className='tabla-contenedor-productos'>
         <thead>
@@ -267,20 +344,16 @@ const TablaProductos = () => {
               <td>{producto.nombre}</td>
               <td>{producto.stock}</td>
               <td>{producto.precio}</td>
-
               <td>
                 {producto.foto && (
                   <img src={`data:image/jpg;base64,${producto.foto}`} alt="Producto" className="product-images" />
                 )}
               </td>
-
               <td>{producto.categoria}</td>
               <td>
-
                 <Button className='separacion' onClick={() => editarProducto(producto._id, producto.nombre, producto.stock, producto.precio, producto.foto, producto.categoria)}>
                   <FaRegPenToSquare />
                 </Button>
-
                 <Button className='separacion' onClick={() => eliminarProducto(producto._id)}>
                   <FaIcons.FaTrashAlt />
                 </Button>
@@ -299,19 +372,23 @@ const TablaProductos = () => {
             <Form.Group controlId="formNombre">
               <Form.Label>Nombre</Form.Label>
               <Form.Control type="text" value={editarProductoData.nombre} onChange={(e) => setEditarProductoData({ ...editarProductoData, nombre: e.target.value })} />
-              {editarProductoData.nombre.trim().length < 3 && <span className="error-message">El nombre debe tener al menos 3 caracteres</span>}
             </Form.Group>
             <Form.Group controlId="formStock">
               <Form.Label>Stock</Form.Label>
-              <Form.Control type="number" value={editarProductoData.stock} onChange={(e) => setEditarProductoData({ ...editarProductoData, stock: Number(e.target.value) })} />
-              {editarProductoData.stock <= 0 && <span className="error-message">El stock debe ser mayor a 0</span>}
+              <Form.Control type="text" value={editarProductoData.stock} onChange={(e) => setEditarProductoData({ ...editarProductoData, stock: e.target.value })} />
             </Form.Group>
             <Form.Group controlId="formPrecio">
               <Form.Label>Precio</Form.Label>
-              <Form.Control type="number" value={editarProductoData.precio} onChange={(e) => setEditarProductoData({ ...editarProductoData, precio: Number(e.target.value) })} />
-              {editarProductoData.precio <= 0 && <span className="error-message">El precio debe ser mayor a 0</span>}
+              <div className="input-group">
+                <Form.Control as="select" value={moneda} onChange={handleMonedaChange} className="input-group-prepend">
+                  <option value="$">$</option>
+                  <option value="€">€</option>
+                  <option value="£">£</option>
+                  <option value="¥">¥</option>
+                </Form.Control>
+                <Form.Control type="text" value={editarProductoData.precio} onChange={handlePrecioChange} />
+              </div>
             </Form.Group>
-
             <Form.Group controlId="formFoto">
               <Form.Label>Foto</Form.Label>
               <div
@@ -330,7 +407,6 @@ const TablaProductos = () => {
                 Seleccionar desde la computadora
               </Button>
             </Form.Group>
-
             <Form.Group controlId="formCategoria">
               <Form.Label>Categoría</Form.Label>
               <Form.Control as="select" className='hacker-select' value={editarProductoData.categoria} onChange={(e) => setEditarProductoData({ ...editarProductoData, categoria: e.target.value })}>
@@ -339,23 +415,19 @@ const TablaProductos = () => {
                   <option key={index} value={categoria.nombre}>{categoria.nombre}</option>
                 ))}
               </Form.Control>
-              {editarProductoData.categoria.trim().length < 3 && <span className="error-message">La categoría debe tener al menos 3 caracteres</span>}
             </Form.Group>
-
           </Form>
         </Modal.Body>
         <Modal.Footer className='modal-footer'>
           <Button variant="secondary" onClick={() => setShowEditarModal(false)}>
             Cancelar
           </Button>
-
           <Link className='boton-ver-detalle' to={`/detalle/${editarProductoData.id}`}>Ver Detalle</Link>
-          <Button variant="primary" onClick={guardarCambiosProducto} disabled={!formIsValid()}>
+          <Button variant="primary" onClick={guardarCambiosProducto}>
             Guardar Cambios
           </Button>
         </Modal.Footer>
       </Modal>
-
 
       <Modal show={showCrearModal} onHide={() => setShowCrearModal(false)}>
         <Modal.Header closeButton>
@@ -366,19 +438,23 @@ const TablaProductos = () => {
             <Form.Group controlId="formNombre">
               <Form.Label>Nombre</Form.Label>
               <Form.Control type="text" value={nuevoProductoData.nombre} onChange={(e) => setNuevoProductoData({ ...nuevoProductoData, nombre: e.target.value })} />
-              {nuevoProductoData.nombre.trim().length < 3 && <span className="error-message">El nombre debe tener al menos 3 caracteres</span>}
             </Form.Group>
             <Form.Group controlId="formStock">
               <Form.Label>Stock</Form.Label>
-              <Form.Control type="number" value={nuevoProductoData.stock} onChange={(e) => setNuevoProductoData({ ...nuevoProductoData, stock: Number(e.target.value) })} />
-              {nuevoProductoData.stock <= 0 && <span className="error-message">El stock debe ser mayor a 0</span>}
+              <Form.Control type="text" value={nuevoProductoData.stock} onChange={(e) => setNuevoProductoData({ ...nuevoProductoData, stock: e.target.value })} />
             </Form.Group>
             <Form.Group controlId="formPrecio">
               <Form.Label>Precio</Form.Label>
-              <Form.Control type="number" value={nuevoProductoData.precio} onChange={(e) => setNuevoProductoData({ ...nuevoProductoData, precio: Number(e.target.value) })} />
-              {nuevoProductoData.precio <= 0 && <span className="error-message">El precio debe ser mayor a 0</span>}
+              <div className="input-group">
+                <Form.Control as="select" value={moneda} onChange={handleMonedaChange} className="input-group-prepend">
+                  <option value="$">$</option>
+                  <option value="€">€</option>
+                  <option value="£">£</option>
+                  <option value="¥">¥</option>
+                </Form.Control>
+                <Form.Control type="text" value={nuevoProductoData.precio} onChange={handlePrecioChange} />
+              </div>
             </Form.Group>
-
             <Form.Group controlId="formFoto">
               <Form.Label>Foto</Form.Label>
               <div
@@ -397,7 +473,6 @@ const TablaProductos = () => {
                 Seleccionar desde la computadora
               </Button>
             </Form.Group>
-
             <Form.Group controlId="formCategoria">
               <Form.Label>Categoría</Form.Label>
               <Form.Control as="select" className='hacker-select' value={nuevoProductoData.categoria} onChange={(e) => setNuevoProductoData({ ...nuevoProductoData, categoria: e.target.value })}>
@@ -406,16 +481,14 @@ const TablaProductos = () => {
                   <option key={index} value={categoria.nombre}>{categoria.nombre}</option>
                 ))}
               </Form.Control>
-              {nuevoProductoData.categoria.trim().length < 3 && <span className="error-message">La categoría debe tener al menos 3 caracteres</span>}
             </Form.Group>
-
           </Form>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => setShowCrearModal(false)}>
             Cancelar
           </Button>
-          <Button variant="primary" onClick={crearProducto} disabled={!formIsValidCreate()}>
+          <Button variant="primary" onClick={crearProducto}>
             Crear Producto
           </Button>
         </Modal.Footer>
@@ -424,8 +497,9 @@ const TablaProductos = () => {
   );
 }
 
-
 export default TablaProductos;
+
+
 
 
 
